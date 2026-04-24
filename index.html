@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shiv Tech — DevOps Engineering & Cloud Infrastructure Consulting</title>
+<meta name="description" content="Shiv Tech builds production-grade DevOps pipelines, container infrastructure, and DevSecOps systems. Zero-downtime migrations, Kubernetes, Terraform, CI/CD, and TLS automation." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0B;
+    --bg-elev: #111113;
+    --surface: #16161A;
+    --border: #24242A;
+    --border-strong: #35353D;
+    --text: #ECEAE6;
+    --text-dim: #A09B93;
+    --text-muted: #6B6862;
+    --accent: #FF5B14;
+    --accent-dim: #B23F0E;
+    --success: #7FB069;
+    --warn: #E8B259;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .serif { font-family: 'Instrument Serif', serif; font-style: italic; }
+
+  /* Ambient noise texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ========== NAV ========== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 11, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+    border: 1.5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transform: rotate(45deg);
+  }
+
+  .logo-mark::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background: var(--accent);
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .logo-text small {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0A0A0B;
+  }
+
+  .btn-primary:hover {
+    background: #FF7535;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    padding: 100px 0 120px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -10%;
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(ellipse at top right, rgba(255, 91, 20, 0.12), transparent 60%);
+    pointer-events: none;
+  }
+
+  .status-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+
+  .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 0 var(--success);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(127, 176, 105, 0.6); }
+    70% { box-shadow: 0 0 0 8px rgba(127, 176, 105, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(127, 176, 105, 0); }
+  }
+
+  .hero h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(42px, 6.5vw, 88px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    max-width: 1100px;
+    margin-bottom: 36px;
+  }
+
+  .hero h1 .serif {
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-top: 60px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* Terminal card */
+  .terminal {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #0E0E10;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-bar .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-strong);
+  }
+
+  .terminal-bar .dot:nth-child(1) { background: #FF5F56; }
+  .terminal-bar .dot:nth-child(2) { background: #FFBD2E; }
+  .terminal-bar .dot:nth-child(3) { background: #27C93F; }
+
+  .terminal-bar .title {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+
+  .terminal-body {
+    padding: 20px;
+    line-height: 1.85;
+    color: var(--text-dim);
+  }
+
+  .terminal-body .prompt { color: var(--accent); }
+  .terminal-body .cmd { color: var(--text); }
+  .terminal-body .out { color: var(--text-muted); }
+  .terminal-body .ok { color: var(--success); }
+
+  /* ========== METRICS ========== */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .metric {
+    padding: 40px 28px;
+    border-right: 1px solid var(--border);
+  }
+
+  .metric:last-child { border-right: none; }
+
+  @media (max-width: 768px) {
+    .metric:nth-child(2) { border-right: none; }
+    .metric:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  }
+
+  .metric-num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ========== SECTION BASE ========== */
+  section {
+    padding: 120px 0;
+    position: relative;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+  }
+
+  .section-label::before {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(34px, 4.5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    max-width: 900px;
+    margin-bottom: 24px;
+  }
+
+  .section-title .serif {
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  .section-lede {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 72px;
+  }
+
+  /* ========== SERVICES ========== */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  .service {
+    padding: 40px 32px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background 0.25s;
+  }
+
+  .service:hover { background: var(--bg-elev); }
+
+  .service-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+  }
+
+  .service-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    color: var(--accent);
+  }
+
+  .service h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .service p {
+    font-size: 14.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ========== STACK ========== */
+  .stack-section {
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stack-col {
+    background: var(--bg-elev);
+    padding: 28px 24px;
+  }
+
+  .stack-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .stack-col ul {
+    list-style: none;
+  }
+
+  .stack-col li {
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+    border-bottom: 1px dashed transparent;
+  }
+
+  .stack-col li::before {
+    content: "›";
+    color: var(--accent);
+    margin-right: 10px;
+    opacity: 0.6;
+  }
+
+  /* ========== PROCESS ========== */
+  .process-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .process-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.2fr;
+    gap: 40px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    transition: padding 0.25s;
+  }
+
+  .process-item:hover { padding-left: 16px; }
+
+  @media (max-width: 768px) {
+    .process-item { grid-template-columns: 60px 1fr; gap: 20px; }
+    .process-desc-col { grid-column: 1 / -1; margin-top: 12px; padding-left: 80px; }
+  }
+
+  @media (max-width: 480px) {
+    .process-desc-col { padding-left: 0; }
+  }
+
+  .process-num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .process-title {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .process-desc {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ========== PROJECTS ========== */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .projects { grid-template-columns: 1fr; }
+  }
+
+  .project {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 36px;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .project:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .project-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .project h3 {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  .project p {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 2px;
+  }
+
+  /* ========== WHY US ========== */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .why-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .why-list {
+    list-style: none;
+  }
+
+  .why-list li {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 18px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .why-list li:first-child { border-top: 1px solid var(--border); }
+
+  .why-list .check {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .why-list strong {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .why-list span.desc {
+    color: var(--text-dim);
+    font-size: 14.5px;
+  }
+
+  .credentials-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .credentials-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .credentials-card h4 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  .cred-list {
+    list-style: none;
+  }
+
+  .cred-list li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .cred-list li:last-child { border-bottom: none; }
+  .cred-list .val { color: var(--accent); }
+
+  /* ========== CTA ========== */
+  .cta-section {
+    background: linear-gradient(160deg, #1A0E06 0%, #0A0A0B 70%);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 140px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 91, 20, 0.08), transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-size: clamp(38px, 5.5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    margin-bottom: 28px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-title .serif { color: var(--accent); font-weight: 400; }
+
+  .cta-desc {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin: 0 auto 40px;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 0 32px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  .footer-brand p {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin: 18px 0;
+    max-width: 340px;
+    line-height: 1.6;
+  }
+
+  .footer-contact {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .footer-contact div { padding: 3px 0; }
+  .footer-contact a { color: var(--text-dim); text-decoration: none; }
+  .footer-contact a:hover { color: var(--accent); }
+
+  .footer-col h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { padding: 5px 0; }
+  .footer-col a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ========== BOOKING FORM ========== */
+  .booking-section {
+    padding: 120px 0;
+    background: linear-gradient(160deg, #1A0E06 0%, #0A0A0B 70%);
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .booking-section::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 91, 20, 0.06), transparent 60%);
+    pointer-events: none;
+  }
+
+  .booking-header {
+    text-align: center;
+    margin-bottom: 72px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .booking-header .section-label {
+    justify-content: center;
+    display: inline-flex;
+  }
+
+  .booking-header .section-label::before {
+    display: none;
+  }
+
+  .booking-header h2 {
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    margin-bottom: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .booking-header h2 .serif { color: var(--accent); font-weight: 400; }
+
+  .booking-header p {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 900px) {
+    .booking-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Sidebar */
+  .booking-sidebar {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 36px 32px;
+    align-self: start;
+    position: sticky;
+    top: 100px;
+  }
+
+  @media (max-width: 900px) {
+    .booking-sidebar { position: static; }
+  }
+
+  .booking-sidebar h3 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .booking-sidebar > p {
+    font-size: 14.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .sidebar-features {
+    list-style: none;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+
+  .sidebar-features li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+    align-items: start;
+  }
+
+  .sidebar-features li .tick {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .sidebar-response {
+    margin-top: 28px;
+    padding: 16px;
+    background: rgba(127, 176, 105, 0.08);
+    border: 1px solid rgba(127, 176, 105, 0.25);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Form */
+  .booking-form {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 44px;
+  }
+
+  @media (max-width: 600px) {
+    .booking-form { padding: 28px 22px; }
+  }
+
+  .form-group-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-group-title .num {
+    color: var(--text-muted);
+  }
+
+  .form-group {
+    margin-bottom: 36px;
+  }
+
+  .form-group:last-of-type { margin-bottom: 28px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+
+  .form-field.full { grid-column: 1 / -1; }
+
+  .form-field label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .form-field label .req {
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 13px 14px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14.5px;
+    border-radius: 2px;
+    outline: none;
+    transition: all 0.2s;
+    width: 100%;
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--accent);
+    background: #0D0D0F;
+  }
+
+  .form-field textarea {
+    min-height: 130px;
+    resize: vertical;
+    font-family: 'Manrope', sans-serif;
+    line-height: 1.55;
+  }
+
+  .form-field select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23FF5B14' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  .form-field select option {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* Radio pills */
+  .radio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .radio-pill {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .radio-pill input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .radio-pill span {
+    display: block;
+    padding: 11px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--text-dim);
+    transition: all 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .radio-pill:hover span {
+    border-color: var(--text-dim);
+    color: var(--text);
+  }
+
+  .radio-pill input:checked + span {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0A0A0B;
+    font-weight: 600;
+  }
+
+  /* Checkbox */
+  .checkbox-field {
+    display: flex;
+    gap: 12px;
+    align-items: start;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .checkbox-field input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 2px;
+    background: var(--bg-elev);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s;
+  }
+
+  .checkbox-field input:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .checkbox-field input:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0A0A0B;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .checkbox-field span {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .checkbox-field a { color: var(--accent); text-decoration: none; }
+  .checkbox-field a:hover { text-decoration: underline; }
+
+  /* Submit */
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: #0A0A0B;
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 20px;
+    text-transform: uppercase;
+  }
+
+  .form-submit:hover:not(:disabled) {
+    background: #FF7535;
+    transform: translateY(-1px);
+  }
+
+  .form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .form-footer-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  /* Success state */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .form-success.show { display: block; }
+
+  .form-success .icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    border: 2px solid var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--success);
+    font-size: 28px;
+  }
+
+  .form-success h3 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .form-success p {
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .form-success .ref {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 10px 20px;
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    display: inline-block;
+    border-radius: 2px;
+  }
+
+  /* ========== ANIMATIONS ========== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1 { animation: fadeInUp 0.9s ease forwards; }
+  .hero .status-bar { animation: fadeInUp 0.6s ease 0.1s both; }
+  .hero-desc { animation: fadeInUp 0.9s ease 0.2s both; }
+  .hero-actions { animation: fadeInUp 0.9s ease 0.3s both; }
+  .terminal { animation: fadeInUp 1s ease 0.4s both; }
+
+  /* Marquee */
+  .marquee {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 22px 0;
+    background: var(--bg-elev);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-flex;
+    gap: 48px;
+    animation: scroll 35s linear infinite;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .marquee-inner span {
+    display: inline-flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .marquee-inner span::after {
+    content: "◆";
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark"></span>
+        <span class="logo-text">
+          SHIV TECH
+          <small>DevOps · Cloud · Security</small>
+        </span>
+      </a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#stack">Stack</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#book">Book a Call</a>
+      </div>
+      <a href="#book" class="btn btn-primary">
+        Book a Call →
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="status-bar">
+      <span class="pulse"></span>
+      <span>Available for new engagements · April 2026</span>
+    </div>
+
+    <h1>
+      We ship <span class="serif">production-grade</span> infrastructure so your engineers can ship features.
+    </h1>
+
+    <div class="hero-grid">
+      <div>
+        <p class="hero-desc">
+          Shiv Tech is a boutique DevOps consultancy specializing in container orchestration, zero-downtime migrations, CI/CD automation, and DevSecOps pipelines. We build the invisible systems that keep software running.
+        </p>
+        <div class="hero-actions">
+          <a href="#book" class="btn btn-primary">Book Free Consultation →</a>
+          <a href="#work" class="btn btn-ghost">View Our Work</a>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="title">shivtech@prod ~ deploy.sh</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="prompt">$</span> <span class="cmd">terraform apply -auto-approve</span></div>
+          <div class="out">→ Provisioning DOKS cluster...</div>
+          <div class="out">→ Applying Kubernetes manifests...</div>
+          <div><span class="ok">✓</span> <span class="out">Cluster healthy · 3 nodes</span></div>
+          <div><span class="prompt">$</span> <span class="cmd">kubectl rollout status deploy/api</span></div>
+          <div><span class="ok">✓</span> <span class="out">Deployment "api" successfully rolled out</span></div>
+          <div><span class="prompt">$</span> <span class="cmd">trivy image --severity HIGH,CRITICAL</span></div>
+          <div><span class="ok">✓</span> <span class="out">0 vulnerabilities found</span></div>
+          <div><span class="prompt">$</span> <span style="color: var(--accent)">_</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="container">
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-num">6+</div>
+      <div class="metric-label">Years Experience</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">0</div>
+      <div class="metric-label">Downtime Migrations</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">20+</div>
+      <div class="metric-label">Certifications</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">24/7</div>
+      <div class="metric-label">Production Support</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>AWS</span><span>DigitalOcean</span><span>GitHub Actions</span><span>Jenkins</span><span>Nginx</span><span>Trivy</span><span>Ansible</span><span>Prometheus</span><span>Grafana</span><span>Let's Encrypt</span>
+    <span>Docker</span><span>Kubernetes</span><span>Terraform</span><span>AWS</span><span>DigitalOcean</span><span>GitHub Actions</span><span>Jenkins</span><span>Nginx</span><span>Trivy</span><span>Ansible</span><span>Prometheus</span><span>Grafana</span><span>Let's Encrypt</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-label">01 — Services</div>
+    <h2 class="section-title">What we do <span class="serif">exceptionally</span> well.</h2>
+    <p class="section-lede">From single-container migrations to multi-cluster Kubernetes deployments, every engagement is scoped to ship outcomes — not hours.</p>
+
+    <div class="services-grid">
+      <div class="service">
+        <div class="service-num">01</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <h3>Container Orchestration</h3>
+        <p>Docker, Kubernetes (DOKS/EKS), multi-replica deployments with readiness probes, rolling updates, and horizontal autoscaling. From zero to production-ready clusters.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">02</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        <h3>CI/CD Automation</h3>
+        <p>GitHub Actions and Jenkins pipelines with automated image builds, SHA tagging, manifest substitution, and safe rollouts. Deploy confidently on every merge.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">03</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <h3>DevSecOps Pipelines</h3>
+        <p>Vulnerability scanning (Trivy), secret detection (Gitleaks), and misconfiguration analysis (Semgrep) baked into CI. Catch issues before they reach production.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">04</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 19l2 2 4-4M7 12a5 5 0 0 1 5-5 5 5 0 0 1 5 5v3h-3m-4 0H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5h10"/></svg>
+        <h3>Infrastructure-as-Code</h3>
+        <p>Terraform-driven provisioning with idempotent existence checks, dynamic versioning, and reproducible state management across AWS, DigitalOcean, and GCP.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">05</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <h3>Nginx & TLS Hardening</h3>
+        <p>Host-level reverse proxy architecture, Let's Encrypt automation via Certbot webroot, HSTS, rate limiting, HTTP/2, and security header enforcement.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">06</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <h3>Zero-Downtime Migrations</h3>
+        <p>Multi-service Docker stack migrations with data restoration, port conflict resolution, loopback upstreams, and content-level health checks. Zero lost requests.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">07</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <h3>Monitoring & Observability</h3>
+        <p>Prometheus, Grafana, health-check automation, and log analysis tooling. Turn production silence into proactive alerts and actionable dashboards.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">08</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.5-2 10-7 10-13V4l-10-2L2 4v5c0 6 4.5 11 10 13z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Security Audits</h3>
+        <p>Infrastructure security reviews covering TLS configuration, IAM policies, container runtime hardening, and DPDP-aligned data handling.</p>
+      </div>
+
+      <div class="service">
+        <div class="service-num">09</div>
+        <svg class="service-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <h3>Cloud Cost Optimization</h3>
+        <p>Right-sizing instances, reserved capacity planning, unused resource audits, and workload migration strategies to cut cloud bills by 30–60%.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="stack-section">
+  <div class="container">
+    <div class="section-label">02 — Technology</div>
+    <h2 class="section-title">Battle-tested <span class="serif">tooling</span>.</h2>
+    <p class="section-lede">We use what works in production — not what's trending on Twitter.</p>
+
+    <div class="stack-grid">
+      <div class="stack-col">
+        <h4>Cloud & Infra</h4>
+        <ul>
+          <li>AWS (EC2, S3, IAM, VPC)</li>
+          <li>DigitalOcean (DOKS)</li>
+          <li>Docker · Kubernetes</li>
+          <li>Terraform · Ansible</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>CI/CD</h4>
+        <ul>
+          <li>GitHub Actions</li>
+          <li>Jenkins</li>
+          <li>GHCR · Bash scripting</li>
+          <li>Argo-style rollouts</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>DevSecOps</h4>
+        <ul>
+          <li>Trivy · Gitleaks · Semgrep</li>
+          <li>Let's Encrypt · Certbot</li>
+          <li>HSTS · CSP · Rate limiting</li>
+          <li>Security header enforcement</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Observability</h4>
+        <ul>
+          <li>Prometheus · Grafana</li>
+          <li>Log aggregation</li>
+          <li>Health-check automation</li>
+          <li>Readiness · Liveness probes</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Web & Networking</h4>
+        <ul>
+          <li>Nginx (host & containerized)</li>
+          <li>HTTP/2 · Reverse proxy</li>
+          <li>DNS · Loopback upstreams</li>
+          <li>ACME HTTP-01</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Backend & Data</h4>
+        <ul>
+          <li>Node.js · Express · FastAPI</li>
+          <li>Flask · MongoDB · MySQL</li>
+          <li>PostgreSQL · Firebase</li>
+          <li>Redis · Message queues</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="section-label">03 — Process</div>
+    <h2 class="section-title">How we <span class="serif">operate</span>.</h2>
+    <p class="section-lede">Transparent, milestone-driven engagements. No surprises. No scope creep.</p>
+
+    <div class="process-list">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <div class="process-title">Discovery Call</div>
+        <div class="process-desc-col"><p class="process-desc">A 30-minute free call to understand your current infrastructure, pain points, and goals. We walk away with a clear scope or we don't take the project.</p></div>
+      </div>
+
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <div class="process-title">Audit & Proposal</div>
+        <div class="process-desc-col"><p class="process-desc">We audit your existing stack — deployment scripts, logs, configs, security posture — and deliver a fixed-price, fixed-timeline proposal with measurable outcomes.</p></div>
+      </div>
+
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <div class="process-title">Build & Ship</div>
+        <div class="process-desc-col"><p class="process-desc">We work in weekly sprints with async Loom updates, GitHub PRs you can review, and a shared Slack/Discord channel. You're never in the dark.</p></div>
+      </div>
+
+      <div class="process-item">
+        <div class="process-num">04</div>
+        <div class="process-title">Handover & Support</div>
+        <div class="process-desc-col"><p class="process-desc">Full documentation, runbooks, and a recorded walkthrough. Optional monthly retainer for ongoing monitoring, incident response, and infrastructure evolution.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="work" style="background: var(--bg-elev); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">04 — Selected Work</div>
+    <h2 class="section-title">Things we've <span class="serif">built</span>.</h2>
+    <p class="section-lede">A few representative projects. Full portfolio and code samples available on request.</p>
+
+    <div class="projects">
+      <div class="project">
+        <span class="project-tag">DevSecOps Platform</span>
+        <h3>Dock Shield</h3>
+        <p>End-to-end DevSecOps pipeline automating container vulnerability scanning, secret detection, and misconfiguration analysis. Provisioned via Terraform on DigitalOcean Kubernetes with idempotent existence checks and enriched with Debian Security Tracker advisories.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Kubernetes</span>
+          <span class="tech-pill">Terraform</span>
+          <span class="tech-pill">GitHub Actions</span>
+          <span class="tech-pill">Trivy</span>
+          <span class="tech-pill">Node.js</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <span class="project-tag">Infrastructure</span>
+        <h3>Nginx + Let's Encrypt Reverse Proxy</h3>
+        <p>Production-grade host-level Nginx fronting containerized Node.js and Flask services on loopback interfaces. Automated ACME HTTP-01 certificate issuance with staged bootstrap-then-upgrade config, HSTS, rate limiting, and zero-downtime renewal.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Nginx</span>
+          <span class="tech-pill">Certbot</span>
+          <span class="tech-pill">Docker Compose</span>
+          <span class="tech-pill">TLS/SSL</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <span class="project-tag">Containerization</span>
+        <h3>WiseCow Kubernetes Deployment</h3>
+        <p>Production application containerized with Docker and deployed on Kubernetes with Deployment, Service, and Ingress manifests. Automated GHCR image builds via GitHub Actions CI, readiness/liveness probes, and TLS-enforced ingress.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Docker</span>
+          <span class="tech-pill">Kubernetes</span>
+          <span class="tech-pill">GitHub Actions</span>
+          <span class="tech-pill">Bash</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <span class="project-tag">Platform Engineering</span>
+        <h3>RouteOptima</h3>
+        <p>Delivery route optimization platform supporting multi-vehicle types with Jenkins CI/CD, self-signed SSL, Nginx reverse proxy, and MongoDB backup strategy. Deployed with Google OAuth and Twilio OTP-based multi-factor authentication.</p>
+        <div class="project-tech">
+          <span class="tech-pill">Flask</span>
+          <span class="tech-pill">Jenkins</span>
+          <span class="tech-pill">MongoDB</span>
+          <span class="tech-pill">Nginx</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section>
+  <div class="container">
+    <div class="section-label">05 — Why Shiv Tech</div>
+    <div class="why-grid">
+      <div>
+        <h2 class="section-title" style="margin-bottom: 32px;">Senior expertise. <span class="serif">Boutique</span> attention.</h2>
+        <ul class="why-list">
+          <li>
+            <span class="check">[✓]</span>
+            <div>
+              <strong>Real production experience</strong>
+              <span class="desc">6+ years shipping infrastructure for live products serving real users — not just lab exercises.</span>
+            </div>
+          </li>
+          <li>
+            <span class="check">[✓]</span>
+            <div>
+              <strong>Fixed-price, fixed-scope</strong>
+              <span class="desc">No hourly billing games. We quote the outcome and absorb the complexity.</span>
+            </div>
+          </li>
+          <li>
+            <span class="check">[✓]</span>
+            <div>
+              <strong>You own everything</strong>
+              <span class="desc">Full source code, documentation, and runbooks handed over. Zero vendor lock-in.</span>
+            </div>
+          </li>
+          <li>
+            <span class="check">[✓]</span>
+            <div>
+              <strong>Security-first by default</strong>
+              <span class="desc">TLS, secrets management, vulnerability scanning, and least-privilege IAM baked into every engagement.</span>
+            </div>
+          </li>
+          <li>
+            <span class="check">[✓]</span>
+            <div>
+              <strong>India-based, global mindset</strong>
+              <span class="desc">Competitive rates with experience shipping for international clients and production workloads.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="credentials-card">
+        <h4>Credentials that back the work.</h4>
+        <ul class="cred-list">
+          <li><span>MongoDB Associate Developer</span><span class="val">Certified</span></li>
+          <li><span>AWS Academy Cloud Developer</span><span class="val">2025</span></li>
+          <li><span>Docker (KodeKloud)</span><span class="val">Certified</span></li>
+          <li><span>Kubernetes in Google Cloud</span><span class="val">GCP</span></li>
+          <li><span>Smart India Hackathon</span><span class="val">National Finalist</span></li>
+          <li><span>NPTEL / IIT Kanpur</span><span class="val">6× Certified</span></li>
+          <li><span>B.Tech, Information Technology</span><span class="val">CGPA 9.0</span></li>
+          <li><span>Years in production</span><span class="val">6+</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking-section" id="book">
+  <div class="container">
+    <div class="booking-header">
+      <div class="section-label">06 — Book an Appointment</div>
+      <h2>Let's build <span class="serif">something</span> reliable.</h2>
+      <p>Fill out the form below and we'll get back within 24 hours with next steps. Your first consultation is always free — no strings attached.</p>
+    </div>
+
+    <div class="booking-grid">
+      <!-- Sidebar -->
+      <aside class="booking-sidebar">
+        <h3>What happens next?</h3>
+        <p>After you submit this form, here's exactly what to expect from our side.</p>
+        <ul class="sidebar-features">
+          <li><span class="tick">01.</span><span>We review your requirements within 24 hours on business days.</span></li>
+          <li><span class="tick">02.</span><span>You'll get a calendar invite for a 30-minute discovery call.</span></li>
+          <li><span class="tick">03.</span><span>We scope the work and send a fixed-price proposal within 3 days.</span></li>
+          <li><span class="tick">04.</span><span>If it's a fit, we kick off. If not, we refer you to someone better suited.</span></li>
+        </ul>
+        <div class="sidebar-response">
+          <span class="pulse"></span>
+          <span>Currently accepting new projects</span>
+        </div>
+      </aside>
+
+      <!-- Form -->
+      <div class="booking-form">
+        <form id="bookingForm" action="https://script.google.com/macros/s/AKfycbww0MeGmWh5WAQL1qUwUOneeFQ2zVj_UI_KwSsqMzpr9ZhRq67-MTT1WYA1KTyPuYn7/exec" method="POST">
+
+          <!-- SECTION 1: CONTACT -->
+          <div class="form-group">
+            <div class="form-group-title"><span class="num">01.</span> Contact Information</div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Full Name <span class="req">*</span></label>
+                <input type="text" name="name" placeholder="e.g. Rahul Sharma" required />
+              </div>
+              <div class="form-field">
+                <label>Work Email <span class="req">*</span></label>
+                <input type="email" name="email" placeholder="you@company.com" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Company / Organization</label>
+                <input type="text" name="company" placeholder="Your company name" />
+              </div>
+              <div class="form-field">
+                <label>Phone / WhatsApp</label>
+                <input type="tel" name="phone" placeholder="+91 98765 43210" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Country <span class="req">*</span></label>
+                <input type="text" name="country" placeholder="e.g. India" required />
+              </div>
+              <div class="form-field">
+                <label>Your Role</label>
+                <select name="role">
+                  <option value="">Select your role</option>
+                  <option>Founder / CEO</option>
+                  <option>CTO / Tech Lead</option>
+                  <option>Engineering Manager</option>
+                  <option>DevOps / SRE</option>
+                  <option>Software Engineer</option>
+                  <option>Product Manager</option>
+                  <option>Operations / IT</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 2: PROJECT -->
+          <div class="form-group">
+            <div class="form-group-title"><span class="num">02.</span> Project Details</div>
+
+            <div class="form-field full">
+              <label>What service do you need? <span class="req">*</span></label>
+              <select name="service" required>
+                <option value="">Select a service</option>
+                <option>Container Orchestration (Docker / Kubernetes)</option>
+                <option>CI/CD Pipeline Setup</option>
+                <option>DevSecOps & Security Scanning</option>
+                <option>Infrastructure-as-Code (Terraform)</option>
+                <option>Nginx Reverse Proxy & TLS/SSL</option>
+                <option>Zero-Downtime Migration</option>
+                <option>Monitoring & Observability</option>
+                <option>Cloud Security Audit</option>
+                <option>Cloud Cost Optimization</option>
+                <option>Managed DevOps Retainer</option>
+                <option>Not sure — need advice</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label>Current infrastructure stage <span class="req">*</span></label>
+              <div class="radio-grid">
+                <label class="radio-pill"><input type="radio" name="stage" value="Pre-launch" required /><span>Pre-launch</span></label>
+                <label class="radio-pill"><input type="radio" name="stage" value="Early production" /><span>Early Production</span></label>
+                <label class="radio-pill"><input type="radio" name="stage" value="Scaling" /><span>Scaling</span></label>
+                <label class="radio-pill"><input type="radio" name="stage" value="Enterprise" /><span>Enterprise</span></label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Team size</label>
+                <select name="team_size">
+                  <option value="">Select team size</option>
+                  <option>Solo / 1 person</option>
+                  <option>2 – 10</option>
+                  <option>11 – 50</option>
+                  <option>51 – 200</option>
+                  <option>200+</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Budget range (USD) <span class="req">*</span></label>
+                <select name="budget" required>
+                  <option value="">Select budget</option>
+                  <option>Under $500</option>
+                  <option>$500 – $2,000</option>
+                  <option>$2,000 – $5,000</option>
+                  <option>$5,000 – $15,000</option>
+                  <option>$15,000+</option>
+                  <option>Ongoing retainer</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field full">
+              <label>Timeline / Urgency <span class="req">*</span></label>
+              <div class="radio-grid">
+                <label class="radio-pill"><input type="radio" name="timeline" value="ASAP" required /><span>ASAP</span></label>
+                <label class="radio-pill"><input type="radio" name="timeline" value="1-2 weeks" /><span>1–2 weeks</span></label>
+                <label class="radio-pill"><input type="radio" name="timeline" value="1 month" /><span>Within a month</span></label>
+                <label class="radio-pill"><input type="radio" name="timeline" value="1-3 months" /><span>1–3 months</span></label>
+                <label class="radio-pill"><input type="radio" name="timeline" value="Flexible" /><span>Flexible</span></label>
+              </div>
+            </div>
+
+            <div class="form-field full">
+              <label>Tell us about your project <span class="req">*</span></label>
+              <textarea name="message" placeholder="What are you trying to build or fix? What's your current stack? Any specific challenges we should know about?" required></textarea>
+            </div>
+
+            <div class="form-field full">
+              <label>Current tech stack (optional)</label>
+              <input type="text" name="tech_stack" placeholder="e.g. Node.js, MongoDB, AWS EC2, Docker" />
+            </div>
+          </div>
+
+          <!-- SECTION 3: SCHEDULING -->
+          <div class="form-group">
+            <div class="form-group-title"><span class="num">03.</span> Scheduling Preference</div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Preferred date</label>
+                <input type="date" name="preferred_date" />
+              </div>
+              <div class="form-field">
+                <label>Preferred time (IST)</label>
+                <select name="preferred_time">
+                  <option value="">Any time</option>
+                  <option>Morning (9 AM – 12 PM)</option>
+                  <option>Afternoon (12 PM – 4 PM)</option>
+                  <option>Evening (4 PM – 8 PM)</option>
+                  <option>Late Evening (8 PM – 11 PM)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Your timezone</label>
+                <input type="text" name="timezone" placeholder="e.g. GMT+5:30 / EST / PST" />
+              </div>
+              <div class="form-field">
+                <label>How did you hear about us?</label>
+                <select name="source">
+                  <option value="">Select source</option>
+                  <option>LinkedIn</option>
+                  <option>GitHub</option>
+                  <option>Google Search</option>
+                  <option>Referral</option>
+                  <option>Social Media</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Consent -->
+          <label class="checkbox-field">
+            <input type="checkbox" name="consent" required />
+            <span>I agree to be contacted by Shiv Tech regarding my project inquiry. Your details are never shared with third parties. <a href="#">Privacy Policy</a>.</span>
+          </label>
+
+          <label class="checkbox-field">
+            <input type="checkbox" name="newsletter" />
+            <span>Send me occasional tips on DevOps, cloud infrastructure, and security. Unsubscribe anytime.</span>
+          </label>
+
+          <button type="submit" class="form-submit">Submit & Request Appointment</button>
+
+          <p class="form-footer-note">
+            🔒 Your information is encrypted and confidential. We reply within 24 hours.
+          </p>
+        </form>
+
+        <!-- Success state -->
+        <div class="form-success" id="formSuccess">
+          <div class="icon">✓</div>
+          <h3>Request received.</h3>
+          <p>Thanks for reaching out. We'll review your requirements and email you within 24 hours to schedule the call.</p>
+          <div class="ref" id="refNumber">REF: ST-<span id="refCode">------</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-mark"></span>
+          <span class="logo-text">
+            SHIV TECH
+            <small>DevOps · Cloud · Security</small>
+          </span>
+        </a>
+        <p>Boutique DevOps consultancy building production-grade infrastructure for startups and scale-ups.</p>
+        <div class="footer-contact">
+          <div><a href="mailto:kirtanlokadiya0@gmail.com">kirtanlokadiya0@gmail.com</a></div>
+          <div><a href="tel:+919328823998">+91 932-882-3998</a></div>
+          <div>Surat, Gujarat, India</div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Container Orchestration</a></li>
+          <li><a href="#services">CI/CD Automation</a></li>
+          <li><a href="#services">DevSecOps Pipelines</a></li>
+          <li><a href="#services">IaC with Terraform</a></li>
+          <li><a href="#services">Nginx & TLS</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#process">How We Work</a></li>
+          <li><a href="#work">Case Studies</a></li>
+          <li><a href="#book">Book a Call</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="https://github.com/Kirtan-lokadiya" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/KirtanLokadiya" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:kirtanlokadiya0@gmail.com">Email Us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Shiv Tech. All rights reserved.</div>
+      <div>Built with precision in Surat ◆ Deployed globally</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ========== BOOKING FORM HANDLER ==========
+  // Backend: Google Apps Script (free, unlimited)
+  // Saves submissions to Google Sheet + emails kirtanlokadiya0@gmail.com
+
+  const form = document.getElementById('bookingForm');
+  const success = document.getElementById('formSuccess');
+  const refCode = document.getElementById('refCode');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('.form-submit');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const formData = new FormData(form);
+
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+        // Use the reference ID returned by the backend
+        refCode.textContent = result.ref ? result.ref.replace('ST-', '') : 'XXXXXX';
+        form.style.display = 'none';
+        success.classList.add('show');
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      console.error('Form error:', err);
+
+      // Fallback: open email client with pre-filled body
+      const data = new FormData(form);
+      const body = [];
+      data.forEach((value, key) => {
+        if (value) body.push(`${key}: ${value}`);
+      });
+      const mailtoLink = `mailto:kirtanlokadiya0@gmail.com?subject=New Appointment Request - Shiv Tech&body=${encodeURIComponent(body.join('\n\n'))}`;
+
+      alert('Something went wrong with automatic submission. Your email client will open so you can send the details directly.');
+      window.location.href = mailtoLink;
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
+
+  // ========== PARALLAX TERMINAL ==========
+  const terminal = document.querySelector('.terminal');
+  if (terminal) {
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 6;
+      const y = (e.clientY / window.innerHeight - 0.5) * 6;
+      terminal.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
+
+  // ========== MIN DATE ON DATE PICKER ==========
+  const dateInput = document.querySelector('input[type="date"]');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+  }
+</script>
+
+</body>
+</html>
