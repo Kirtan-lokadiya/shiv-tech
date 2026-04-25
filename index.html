@@ -554,72 +554,6 @@
     line-height: 1.65;
   }
 
-  /* ========== PROJECTS ========== */
-  .projects {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  @media (max-width: 900px) {
-    .projects { grid-template-columns: 1fr; }
-  }
-
-  .project {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    padding: 36px;
-    position: relative;
-    transition: all 0.3s;
-  }
-
-  .project:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-  }
-
-  .project-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    padding: 4px 10px;
-    border: 1px solid var(--accent);
-    margin-bottom: 24px;
-  }
-
-  .project h3 {
-    font-size: 26px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
-  }
-
-  .project p {
-    color: var(--text-dim);
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 24px;
-  }
-
-  .project-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tech-pill {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    padding: 4px 10px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    border-radius: 2px;
-  }
-
   /* ========== WHY US ========== */
   .why-grid {
     display: grid;
@@ -1335,7 +1269,6 @@
       <div class="nav-links">
         <a href="#services">Services</a>
         <a href="#stack">Stack</a>
-        <a href="#work">Work</a>
         <a href="#process">Process</a>
         <a href="#book">Book a Call</a>
       </div>
@@ -1365,7 +1298,7 @@
         </p>
         <div class="hero-actions">
           <a href="#book" class="btn btn-primary">Book Free Consultation →</a>
-          <a href="#work" class="btn btn-ghost">View Our Work</a>
+          <a href="#book" class="btn btn-ghost">Book a Call →</a>
         </div>
       </div>
 
@@ -1597,70 +1530,10 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="work" style="background: var(--bg-elev); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-  <div class="container">
-    <div class="section-label">04 — Selected Work</div>
-    <h2 class="section-title">Things we've <span class="serif">built</span>.</h2>
-    <p class="section-lede">A few representative projects. Full portfolio and code samples available on request.</p>
-
-    <div class="projects">
-      <div class="project">
-        <span class="project-tag">DevSecOps Platform</span>
-        <h3>Dock Shield</h3>
-        <p>End-to-end DevSecOps pipeline automating container vulnerability scanning, secret detection, and misconfiguration analysis. Provisioned via Terraform on DigitalOcean Kubernetes with idempotent existence checks and enriched with Debian Security Tracker advisories.</p>
-        <div class="project-tech">
-          <span class="tech-pill">Kubernetes</span>
-          <span class="tech-pill">Terraform</span>
-          <span class="tech-pill">GitHub Actions</span>
-          <span class="tech-pill">Trivy</span>
-          <span class="tech-pill">Node.js</span>
-        </div>
-      </div>
-
-      <div class="project">
-        <span class="project-tag">Infrastructure</span>
-        <h3>Nginx + Let's Encrypt Reverse Proxy</h3>
-        <p>Production-grade host-level Nginx fronting containerized Node.js and Flask services on loopback interfaces. Automated ACME HTTP-01 certificate issuance with staged bootstrap-then-upgrade config, HSTS, rate limiting, and zero-downtime renewal.</p>
-        <div class="project-tech">
-          <span class="tech-pill">Nginx</span>
-          <span class="tech-pill">Certbot</span>
-          <span class="tech-pill">Docker Compose</span>
-          <span class="tech-pill">TLS/SSL</span>
-        </div>
-      </div>
-
-      <div class="project">
-        <span class="project-tag">Containerization</span>
-        <h3>WiseCow Kubernetes Deployment</h3>
-        <p>Production application containerized with Docker and deployed on Kubernetes with Deployment, Service, and Ingress manifests. Automated GHCR image builds via GitHub Actions CI, readiness/liveness probes, and TLS-enforced ingress.</p>
-        <div class="project-tech">
-          <span class="tech-pill">Docker</span>
-          <span class="tech-pill">Kubernetes</span>
-          <span class="tech-pill">GitHub Actions</span>
-          <span class="tech-pill">Bash</span>
-        </div>
-      </div>
-
-      <div class="project">
-        <span class="project-tag">Platform Engineering</span>
-        <h3>RouteOptima</h3>
-        <p>Delivery route optimization platform supporting multi-vehicle types with Jenkins CI/CD, self-signed SSL, Nginx reverse proxy, and MongoDB backup strategy. Deployed with Google OAuth and Twilio OTP-based multi-factor authentication.</p>
-        <div class="project-tech">
-          <span class="tech-pill">Flask</span>
-          <span class="tech-pill">Jenkins</span>
-          <span class="tech-pill">MongoDB</span>
-          <span class="tech-pill">Nginx</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- WHY US -->
 <section>
   <div class="container">
-    <div class="section-label">05 — Why Shiv Tech</div>
+    <div class="section-label">04 — Why Shiv Tech</div>
     <div class="why-grid">
       <div>
         <h2 class="section-title" style="margin-bottom: 32px;">Senior expertise. <span class="serif">Boutique</span> attention.</h2>
@@ -1724,7 +1597,7 @@
 <section class="booking-section" id="book">
   <div class="container">
     <div class="booking-header">
-      <div class="section-label">06 — Book an Appointment</div>
+      <div class="section-label">05 — Book an Appointment</div>
       <h2>Let's build <span class="serif">something</span> reliable.</h2>
       <p>Fill out the form below and we'll get back within 24 hours with next steps. Your first consultation is always free — no strings attached.</p>
     </div>
@@ -1985,7 +1858,6 @@
         <h5>Company</h5>
         <ul>
           <li><a href="#process">How We Work</a></li>
-          <li><a href="#work">Case Studies</a></li>
           <li><a href="#book">Book a Call</a></li>
         </ul>
       </div>
