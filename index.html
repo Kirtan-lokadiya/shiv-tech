@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Kubearoha Technologies — DevOps Engineering & Cloud Infrastructure Consulting</title>
 <meta name="description" content="Kubearoha Technologies builds production-grade DevOps pipelines, container infrastructure, and DevSecOps systems. Zero-downtime migrations, Kubernetes, Terraform, CI/CD, and TLS automation." />
-<link rel="icon" type="image/svg+xml" href="assets/solutions-technology-logo.svg" />
-<link rel="shortcut icon" href="assets/solutions-technology-logo.svg" />
+<link id="faviconSvg" rel="icon" type="image/svg+xml" href="assets/kubearoha-logo-dark.svg?v=2" />
+<link id="faviconShortcut" rel="shortcut icon" href="assets/kubearoha-logo-dark.svg?v=2" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +24,27 @@
     --accent-dim: #2e6de0;
     --success: #78c96f;
     --warn: #e8b259;
+    --nav-bg: rgba(11, 18, 32, 0.88);
+    --cta-bg: linear-gradient(160deg, #14233d 0%, #0b1220 72%);
+    --booking-bg: linear-gradient(160deg, #12243f 0%, #0b1220 72%);
+  }
+
+  html[data-theme="light"] {
+    --bg: #f7faff;
+    --bg-elev: #ffffff;
+    --surface: #eef4ff;
+    --border: #d5e3f8;
+    --border-strong: #b5cae8;
+    --text: #0f2a4a;
+    --text-dim: #355780;
+    --text-muted: #6b87a9;
+    --accent: #1e6bff;
+    --accent-dim: #1550c4;
+    --success: #7fb069;
+    --warn: #e8b259;
+    --nav-bg: rgba(247, 250, 255, 0.88);
+    --cta-bg: linear-gradient(160deg, #eaf2ff 0%, #f7faff 72%);
+    --booking-bg: linear-gradient(160deg, #e7f1ff 0%, #f7faff 72%);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,6 +61,8 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
+
+  html[data-theme="light"] body { color-scheme: light; }
 
   ::selection { background: var(--accent); color: #fff; }
 
@@ -70,7 +93,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(11, 18, 32, 0.88);
+    background: var(--nav-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
@@ -122,6 +145,37 @@
 
   .nav-links a:hover { color: var(--text); }
 
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-elev);
+    color: var(--text-dim);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .theme-icon {
+    font-size: 13px;
+    line-height: 1;
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
@@ -161,6 +215,9 @@
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .logo-img { width: 190px; }
+    .theme-text { display: none; }
+    .theme-toggle { padding: 10px; }
+    .nav-actions .btn { padding: 10px 16px; }
   }
 
   /* ========== HERO ========== */
@@ -727,7 +784,7 @@
 
   /* ========== CTA ========== */
   .cta-section {
-    background: linear-gradient(160deg, #14233d 0%, #0b1220 72%);
+    background: var(--cta-bg);
     border-top: 1px solid var(--border);
     text-align: center;
     padding: 140px 0;
@@ -854,7 +911,7 @@
   /* ========== BOOKING FORM ========== */
   .booking-section {
     padding: 120px 0;
-    background: linear-gradient(160deg, #12243f 0%, #0b1220 72%);
+    background: var(--booking-bg);
     border-top: 1px solid var(--border);
     position: relative;
     overflow: hidden;
@@ -1349,7 +1406,7 @@
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="logo" aria-label="Kubearoha Solutions home">
-        <img class="logo-img" src="assets/solutions-technology-logo.svg" alt="Kubearoha Solutions logo" />
+        <img class="logo-img" src="assets/kubearoha-logo-dark.svg?v=2" alt="Kubearoha Solutions logo" />
         <span class="logo-text">Kubearoha Solutions</span>
       </a>
       <div class="nav-links">
@@ -1359,9 +1416,15 @@
         <a href="#process">Process</a>
         <a href="#book">Book a Call</a>
       </div>
-      <a href="#book" class="btn btn-primary">
-        Book a Call →
-      </a>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to light mode">
+          <span class="theme-icon" aria-hidden="true">☀</span>
+          <span class="theme-text">Light</span>
+        </button>
+        <a href="#book" class="btn btn-primary">
+          Book a Call →
+        </a>
+      </div>
     </div>
   </div>
 </nav>
@@ -1990,7 +2053,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#" class="logo" aria-label="Kubearoha Solutions home">
-          <img class="logo-img" src="assets/solutions-technology-logo.svg" alt="Kubearoha Solutions logo" />
+          <img class="logo-img" src="assets/kubearoha-logo-dark.svg?v=2" alt="Kubearoha Solutions logo" />
           <span class="logo-text">Kubearoha Solutions</span>
         </a>
         <p>Boutique DevOps consultancy building production-grade infrastructure for startups and scale-ups.</p>
@@ -2037,6 +2100,56 @@
 </footer>
 
 <script>
+  // ========== THEME TOGGLE ==========
+  const THEME_KEY = 'kubearoha-theme';
+  const themeToggle = document.getElementById('themeToggle');
+  const logoImgs = document.querySelectorAll('.logo-img');
+  const faviconSvg = document.getElementById('faviconSvg');
+  const faviconShortcut = document.getElementById('faviconShortcut');
+
+  const updateThemeToggle = (theme) => {
+    if (!themeToggle) return;
+    const icon = themeToggle.querySelector('.theme-icon');
+    const text = themeToggle.querySelector('.theme-text');
+    const lightMode = theme === 'light';
+    if (icon) icon.textContent = lightMode ? '🌙' : '☀';
+    if (text) text.textContent = lightMode ? 'Dark' : 'Light';
+    themeToggle.setAttribute('aria-label', lightMode ? 'Switch to dark mode' : 'Switch to light mode');
+  };
+
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeToggle(theme);
+    const logoPath = theme === 'light'
+      ? 'assets/kubearoha-logo-light.svg?v=2'
+      : 'assets/kubearoha-logo-dark.svg?v=2';
+    logoImgs.forEach((img) => { img.src = logoPath; });
+    if (faviconSvg) faviconSvg.href = logoPath;
+    if (faviconShortcut) faviconShortcut.href = logoPath;
+  };
+
+  logoImgs.forEach((img) => {
+    img.addEventListener('error', () => {
+      const lightMode = document.documentElement.getAttribute('data-theme') === 'light';
+      img.src = lightMode ? 'assets/kubearoha-logo-dark.svg?v=2' : 'assets/solutions-technology-logo.svg';
+    });
+  });
+
+  let initialTheme = localStorage.getItem(THEME_KEY);
+  if (initialTheme !== 'light' && initialTheme !== 'dark') {
+    initialTheme = 'dark';
+  }
+  applyTheme(initialTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      localStorage.setItem(THEME_KEY, nextTheme);
+    });
+  }
+
   // ========== BOOKING FORM HANDLER ==========
   // Backend: Google Apps Script (free, unlimited)
   // Saves submissions to Google Sheet + emails kirtanlokadiya0@gmail.com

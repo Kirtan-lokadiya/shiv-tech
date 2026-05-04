@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 210" role="img" aria-labelledby="title desc">
+  <title id="title">Kubearoha Solutions Logo Light</title>
+  <desc id="desc">Hexagon emblem with K letter and the Kubearoha Solutions wordmark for light backgrounds.</desc>
+
+  <defs>
+    <linearGradient id="hexGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E5DD0"/>
+    </linearGradient>
+  </defs>
+
+  <polygon points="82,18 154,59 154,143 82,184 10,143 10,59" fill="url(#hexGradLight)"/>
+  <path d="M56 56h14v42l35-42h18l-36 43 38 52h-18l-30-41-7 8v33H56V56z" fill="#ffffff"/>
+
+  <text x="192" y="92" font-family="Manrope, Arial, Helvetica, sans-serif" font-size="54" font-weight="700" fill="#0F2A4A">Kubearoha</text>
+  <line x1="194" y1="108" x2="580" y2="108" stroke="#94B0D8" stroke-width="2.4"/>
+  <text x="194" y="152" font-family="Manrope, Arial, Helvetica, sans-serif" font-size="42" font-weight="700" fill="#234A79">Solutions</text>
+</svg>
