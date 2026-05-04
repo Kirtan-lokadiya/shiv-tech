@@ -5,21 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Shiv Tech — DevOps Engineering & Cloud Infrastructure Consulting</title>
 <meta name="description" content="Shiv Tech builds production-grade DevOps pipelines, container infrastructure, and DevSecOps systems. Zero-downtime migrations, Kubernetes, Terraform, CI/CD, and TLS automation." />
+<link rel="icon" type="image/svg+xml" href="assets/solutions-technology-logo.svg" />
+<link rel="shortcut icon" href="assets/solutions-technology-logo.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0A0A0B;
-    --bg-elev: #111113;
-    --surface: #16161A;
-    --border: #24242A;
-    --border-strong: #35353D;
-    --text: #ECEAE6;
-    --text-dim: #A09B93;
-    --text-muted: #6B6862;
-    --accent: #FF5B14;
-    --accent-dim: #B23F0E;
+    --bg: #F7FAFF;
+    --bg-elev: #FFFFFF;
+    --surface: #EEF4FF;
+    --border: #D5E3F8;
+    --border-strong: #B5CAE8;
+    --text: #0F2A4A;
+    --text-dim: #355780;
+    --text-muted: #6B87A9;
+    --accent: #1E6BFF;
+    --accent-dim: #1550C4;
     --success: #7FB069;
     --warn: #E8B259;
   }
@@ -38,7 +40,7 @@
     overflow-x: hidden;
   }
 
-  ::selection { background: var(--accent); color: #000; }
+  ::selection { background: var(--accent); color: #fff; }
 
   .mono { font-family: 'JetBrains Mono', monospace; }
   .serif { font-family: 'Instrument Serif', serif; font-style: italic; }
@@ -50,7 +52,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.035;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -67,7 +69,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(10, 10, 11, 0.72);
+    background: rgba(247, 250, 255, 0.88);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
@@ -81,47 +83,28 @@
   }
 
   .logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: -0.01em;
-    color: var(--text);
+    gap: 10px;
     text-decoration: none;
+    color: var(--text);
+    flex-shrink: 0;
   }
 
-  .logo-mark {
-    width: 30px;
-    height: 30px;
-    border: 1.5px solid var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transform: rotate(45deg);
+  .logo:hover .logo-text {
+    color: var(--accent);
   }
 
-  .logo-mark::before {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    background: var(--accent);
+  .logo-img {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
   }
 
   .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-  }
-
-  .logo-text small {
-    font-size: 9px;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 2px;
+    display: none;
   }
 
   .nav-links {
@@ -157,11 +140,11 @@
 
   .btn-primary {
     background: var(--accent);
-    color: #0A0A0B;
+    color: #fff;
   }
 
   .btn-primary:hover {
-    background: #FF7535;
+    background: #1559D6;
     transform: translateY(-1px);
   }
 
@@ -178,6 +161,7 @@
 
   @media (max-width: 768px) {
     .nav-links { display: none; }
+    .logo-img { width: 190px; }
   }
 
   /* ========== HERO ========== */
@@ -194,7 +178,7 @@
     right: -10%;
     width: 60%;
     height: 100%;
-    background: radial-gradient(ellipse at top right, rgba(255, 91, 20, 0.12), transparent 60%);
+    background: radial-gradient(ellipse at top right, rgba(30, 107, 255, 0.14), transparent 60%);
     pointer-events: none;
   }
 
@@ -275,7 +259,7 @@
     overflow: hidden;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12.5px;
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 20px 50px -20px rgba(17, 58, 112, 0.18);
   }
 
   .terminal-bar {
@@ -283,7 +267,7 @@
     align-items: center;
     gap: 6px;
     padding: 10px 14px;
-    background: #0E0E10;
+    background: #EAF2FF;
     border-bottom: 1px solid var(--border);
   }
 
@@ -467,10 +451,18 @@
 
   .stack-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
+  }
+
+  @media (max-width: 1024px) {
+    .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 680px) {
+    .stack-grid { grid-template-columns: 1fr; }
   }
 
   .stack-col {
@@ -645,9 +637,142 @@
   .cred-list li:last-child { border-bottom: none; }
   .cred-list .val { color: var(--accent); }
 
+  /* ========== LEADERSHIP ========== */
+  .leadership-section {
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .leadership-intro {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 760px;
+    margin-bottom: 56px;
+  }
+
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  @media (max-width: 900px) {
+    .leadership-grid { grid-template-columns: 1fr; }
+  }
+
+  .leader-card {
+    border: 1px solid var(--border);
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .leader-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: flex-end;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .leader-photo::before,
+  .leader-photo::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .leader-photo::before {
+    width: 240px;
+    height: 240px;
+    right: -60px;
+    top: -70px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .leader-photo::after {
+    width: 150px;
+    height: 150px;
+    left: -35px;
+    bottom: -35px;
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .leader-photo-kirtan {
+    background: linear-gradient(145deg, #2f6ddf 0%, #1d56bd 55%, #123d8d 100%);
+  }
+
+  .leader-photo-meet {
+    background: linear-gradient(145deg, #14889b 0%, #116f80 55%, #0d5461 100%);
+  }
+
+  .leader-initials {
+    position: relative;
+    z-index: 2;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.04em;
+  }
+
+  .leader-content {
+    padding: 28px;
+  }
+
+  .leader-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .leader-name {
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .leader-bio {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .leader-services {
+    margin-top: 16px;
+    list-style: none;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+
+  .leader-services li {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    padding: 5px 0;
+  }
+
+  .leader-services li::before {
+    content: "•";
+    color: var(--accent);
+    margin-right: 8px;
+  }
+
   /* ========== CTA ========== */
   .cta-section {
-    background: linear-gradient(160deg, #1A0E06 0%, #0A0A0B 70%);
+    background: linear-gradient(160deg, #EAF2FF 0%, #F7FAFF 72%);
     border-top: 1px solid var(--border);
     text-align: center;
     padding: 140px 0;
@@ -663,7 +788,7 @@
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(255, 91, 20, 0.08), transparent 60%);
+    background: radial-gradient(circle, rgba(30, 107, 255, 0.12), transparent 60%);
     pointer-events: none;
   }
 
@@ -720,6 +845,15 @@
     line-height: 1.6;
   }
 
+  .footer-brand .logo {
+    margin-bottom: 10px;
+  }
+
+  .footer-brand .logo-img {
+    width: 220px;
+    height: auto;
+  }
+
   .footer-contact {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
@@ -765,7 +899,7 @@
   /* ========== BOOKING FORM ========== */
   .booking-section {
     padding: 120px 0;
-    background: linear-gradient(160deg, #1A0E06 0%, #0A0A0B 70%);
+    background: linear-gradient(160deg, #E7F1FF 0%, #F7FAFF 72%);
     border-top: 1px solid var(--border);
     position: relative;
     overflow: hidden;
@@ -779,7 +913,7 @@
     transform: translateX(-50%);
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, rgba(255, 91, 20, 0.06), transparent 60%);
+    background: radial-gradient(circle, rgba(30, 107, 255, 0.1), transparent 60%);
     pointer-events: none;
   }
 
@@ -995,7 +1129,7 @@
   .form-field select:focus,
   .form-field textarea:focus {
     border-color: var(--accent);
-    background: #0D0D0F;
+    background: #FFFFFF;
   }
 
   .form-field textarea {
@@ -1009,7 +1143,7 @@
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23FF5B14' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%231E6BFF' stroke-width='1.5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 16px center;
     padding-right: 40px;
@@ -1058,7 +1192,7 @@
   .radio-pill input:checked + span {
     background: var(--accent);
     border-color: var(--accent);
-    color: #0A0A0B;
+    color: #fff;
     font-weight: 600;
   }
 
@@ -1101,7 +1235,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #0A0A0B;
+    color: #fff;
     font-size: 12px;
     font-weight: 700;
   }
@@ -1120,7 +1254,7 @@
     width: 100%;
     padding: 16px;
     background: var(--accent);
-    color: #0A0A0B;
+    color: #fff;
     border: none;
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
@@ -1134,7 +1268,7 @@
   }
 
   .form-submit:hover:not(:disabled) {
-    background: #FF7535;
+    background: #1559D6;
     transform: translateY(-1px);
   }
 
@@ -1259,15 +1393,13 @@
 <nav>
   <div class="container">
     <div class="nav-inner">
-      <a href="#" class="logo">
-        <span class="logo-mark"></span>
-        <span class="logo-text">
-          SHIV TECH
-          <small>DevOps · Cloud · Security</small>
-        </span>
+      <a href="#" class="logo" aria-label="Solutions Technology home">
+        <img class="logo-img" src="assets/solutions-technology-logo.svg" alt="Solutions Technology logo" />
+        <span class="logo-text">Solutions Technology</span>
       </a>
       <div class="nav-links">
         <a href="#services">Services</a>
+        <a href="#leadership">Leadership</a>
         <a href="#stack">Stack</a>
         <a href="#process">Process</a>
         <a href="#book">Book a Call</a>
@@ -1491,6 +1623,33 @@
           <li>Redis · Message queues</li>
         </ul>
       </div>
+      <div class="stack-col">
+        <h4>Source Control</h4>
+        <ul>
+          <li>Git · GitHub workflows</li>
+          <li>Branch protections</li>
+          <li>Semantic version tagging</li>
+          <li>Release automation</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Platform Ops</h4>
+        <ul>
+          <li>Linux server hardening</li>
+          <li>SSH key management</li>
+          <li>Firewall and network rules</li>
+          <li>Cron and backup jobs</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Quality & Reliability</h4>
+        <ul>
+          <li>Automated smoke checks</li>
+          <li>Rollback playbooks</li>
+          <li>SLA/SLO guardrails</li>
+          <li>Incident runbooks</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -1593,11 +1752,60 @@
   </div>
 </section>
 
+<!-- LEADERSHIP -->
+<section id="leadership" class="leadership-section">
+  <div class="container">
+    <div class="section-label">05 — Leadership</div>
+    <h2 class="section-title">People behind <span class="serif">Solutions Technology</span>.</h2>
+    <p class="leadership-intro">
+      We help startups and growing teams design, secure, and scale cloud infrastructure with confidence. Our core services include Kubernetes and container orchestration, CI/CD automation, DevSecOps, infrastructure-as-code, migrations, and production monitoring.
+    </p>
+
+    <div class="leadership-grid">
+      <article class="leader-card">
+        <div class="leader-photo leader-photo-kirtan" role="img" aria-label="Kirtan Lokadiya, CEO at Shiv Tech">
+          <span class="leader-initials">KL</span>
+        </div>
+        <div class="leader-content">
+          <div class="leader-role">CEO</div>
+          <h3 class="leader-name">Kirtan Lokadiya</h3>
+          <p class="leader-bio">
+            Kirtan leads delivery, architecture, and client success across Shiv Tech engagements. He specializes in building production-ready DevOps systems that improve reliability, security, and deployment speed.
+          </p>
+          <ul class="leader-services">
+            <li>Container platforms: Docker and Kubernetes</li>
+            <li>CI/CD pipelines with secure release workflows</li>
+            <li>Zero-downtime deployments and incident readiness</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="leader-card">
+        <div class="leader-photo leader-photo-meet" role="img" aria-label="Meet Lunagariya, Founder at Shiv Tech">
+          <span class="leader-initials">ML</span>
+        </div>
+        <div class="leader-content">
+          <div class="leader-role">Founder</div>
+          <h3 class="leader-name">Meet Lunagariya</h3>
+          <p class="leader-bio">
+            Meet drives company vision and long-term engineering direction. He focuses on practical cloud strategy, clean execution, and outcome-first consulting tailored to each client stage.
+          </p>
+          <ul class="leader-services">
+            <li>Infrastructure strategy and modernization planning</li>
+            <li>Cloud cost optimization and governance</li>
+            <li>Security-first architecture and technical advisory</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- BOOKING FORM -->
 <section class="booking-section" id="book">
   <div class="container">
     <div class="booking-header">
-      <div class="section-label">05 — Book an Appointment</div>
+      <div class="section-label">06 — Book an Appointment</div>
       <h2>Let's build <span class="serif">something</span> reliable.</h2>
       <p>Fill out the form below and we'll get back within 24 hours with next steps. Your first consultation is always free — no strings attached.</p>
     </div>
@@ -1630,29 +1838,31 @@
             <div class="form-row">
               <div class="form-field">
                 <label>Full Name <span class="req">*</span></label>
-                <input type="text" name="name" placeholder="e.g. Rahul Sharma" required />
+                <input type="text" name="name" required />
               </div>
               <div class="form-field">
                 <label>Work Email <span class="req">*</span></label>
-                <input type="email" name="email" placeholder="you@company.com" required />
+                <input type="email" name="email" required />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-field">
                 <label>Company / Organization</label>
-                <input type="text" name="company" placeholder="Your company name" />
+                <input type="text" name="company"  />
               </div>
               <div class="form-field">
                 <label>Phone / WhatsApp</label>
-                <input type="tel" name="phone" placeholder="+91 98765 43210" />
+                <input type="tel" name="phone" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-field">
                 <label>Country <span class="req">*</span></label>
-                <input type="text" name="country" placeholder="e.g. India" required />
+                <select name="country" id="countrySelect" required>
+                  <option value="">Select your country</option>
+                </select>
               </div>
               <div class="form-field">
                 <label>Your Role</label>
@@ -1828,12 +2038,9 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#" class="logo">
-          <span class="logo-mark"></span>
-          <span class="logo-text">
-            SHIV TECH
-            <small>DevOps · Cloud · Security</small>
-          </span>
+        <a href="#" class="logo" aria-label="Solutions Technology home">
+          <img class="logo-img" src="assets/solutions-technology-logo.svg" alt="Solutions Technology logo" />
+          <span class="logo-text">Solutions Technology</span>
         </a>
         <p>Boutique DevOps consultancy building production-grade infrastructure for startups and scale-ups.</p>
         <div class="footer-contact">
@@ -1865,7 +2072,6 @@
       <div class="footer-col">
         <h5>Connect</h5>
         <ul>
-          <li><a href="https://github.com/Kirtan-lokadiya" target="_blank" rel="noopener">GitHub</a></li>
           <li><a href="https://www.linkedin.com/in/KirtanLokadiya" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="mailto:kirtanlokadiya0@gmail.com">Email Us</a></li>
         </ul>
@@ -1887,6 +2093,24 @@
   const form = document.getElementById('bookingForm');
   const success = document.getElementById('formSuccess');
   const refCode = document.getElementById('refCode');
+  const countrySelect = document.getElementById('countrySelect');
+
+  if (countrySelect) {
+    const countries = [
+      'Australia', 'Brazil', 'Canada', 'China', 'France', 'Germany', 'India', 'Indonesia',
+      'Italy', 'Japan', 'Mexico', 'Netherlands', 'New Zealand', 'Nigeria', 'Pakistan',
+      'Philippines', 'Saudi Arabia', 'Singapore', 'South Africa', 'South Korea', 'Spain',
+      'Sweden', 'Switzerland', 'Thailand', 'Turkey', 'United Arab Emirates',
+      'United Kingdom', 'United States', 'Vietnam', 'Other'
+    ];
+
+    countries.forEach((country) => {
+      const option = document.createElement('option');
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    });
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
