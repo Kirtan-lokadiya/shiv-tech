@@ -1,11 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 210" role="img" aria-labelledby="title desc">
-  <title id="title">Solutions Technology Logo</title>
-  <desc id="desc">Blue hexagon with ST letters and the words Solutions Technology.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 210" role="img" aria-labelledby="title desc">
+  <title id="title">Kubearoha Solutions Logo</title>
+  <desc id="desc">Hexagon emblem with K letter and the Kubearoha Solutions wordmark.</desc>
 
-  <polygon points="72,18 146,60 146,145 72,188 -2,145 -2,60" fill="#3f87d5"/>
-  <text x="72" y="112" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#ffffff">ST</text>
+  <defs>
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66A2FF"/>
+      <stop offset="100%" stop-color="#2E6DE0"/>
+    </linearGradient>
+  </defs>
 
-  <text x="188" y="98" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" fill="#171722">Solutions</text>
-  <line x1="190" y1="108" x2="538" y2="108" stroke="#cfcfd7" stroke-width="2"/>
-  <text x="190" y="152" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="400" fill="#4d4dc4">Technology</text>
+  <polygon points="82,18 154,59 154,143 82,184 10,143 10,59" fill="url(#hexGrad)"/>
+  <path d="M56 56h14v42l35-42h18l-36 43 38 52h-18l-30-41-7 8v33H56V56z" fill="#ffffff"/>
+
+  <text x="192" y="92" font-family="Manrope, Arial, Helvetica, sans-serif" font-size="54" font-weight="700" fill="#EAF2FF">Kubearoha</text>
+  <line x1="194" y1="108" x2="580" y2="108" stroke="#36517A" stroke-width="2"/>
+  <text x="194" y="152" font-family="Manrope, Arial, Helvetica, sans-serif" font-size="42" font-weight="500" fill="#8AA2C7">Solutions</text>
 </svg>
