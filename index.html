@@ -12,18 +12,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F7FAFF;
-    --bg-elev: #FFFFFF;
-    --surface: #EEF4FF;
-    --border: #D5E3F8;
-    --border-strong: #B5CAE8;
-    --text: #0F2A4A;
-    --text-dim: #355780;
-    --text-muted: #6B87A9;
-    --accent: #1E6BFF;
-    --accent-dim: #1550C4;
-    --success: #7FB069;
-    --warn: #E8B259;
+    --bg: #0b1220;
+    --bg-elev: #111a2d;
+    --surface: #1a2740;
+    --border: #263754;
+    --border-strong: #36517a;
+    --text: #eaf2ff;
+    --text-dim: #b8c9e6;
+    --text-muted: #8aa2c7;
+    --accent: #4d8dff;
+    --accent-dim: #2e6de0;
+    --success: #78c96f;
+    --warn: #e8b259;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,6 +33,7 @@
   body {
     background: var(--bg);
     color: var(--text);
+    color-scheme: dark;
     font-family: 'Manrope', system-ui, sans-serif;
     font-weight: 400;
     line-height: 1.55;
@@ -69,7 +70,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(247, 250, 255, 0.88);
+    background: rgba(11, 18, 32, 0.88);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
@@ -144,7 +145,7 @@
   }
 
   .btn-primary:hover {
-    background: #1559D6;
+    background: var(--accent-dim);
     transform: translateY(-1px);
   }
 
@@ -267,7 +268,7 @@
     align-items: center;
     gap: 6px;
     padding: 10px 14px;
-    background: #EAF2FF;
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
 
@@ -664,7 +665,7 @@
 
   .leader-card {
     border: 1px solid var(--border);
-    background: #fff;
+    background: var(--bg-elev);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -772,7 +773,7 @@
 
   /* ========== CTA ========== */
   .cta-section {
-    background: linear-gradient(160deg, #EAF2FF 0%, #F7FAFF 72%);
+    background: linear-gradient(160deg, #14233d 0%, #0b1220 72%);
     border-top: 1px solid var(--border);
     text-align: center;
     padding: 140px 0;
@@ -899,7 +900,7 @@
   /* ========== BOOKING FORM ========== */
   .booking-section {
     padding: 120px 0;
-    background: linear-gradient(160deg, #E7F1FF 0%, #F7FAFF 72%);
+    background: linear-gradient(160deg, #12243f 0%, #0b1220 72%);
     border-top: 1px solid var(--border);
     position: relative;
     overflow: hidden;
@@ -1129,7 +1130,7 @@
   .form-field select:focus,
   .form-field textarea:focus {
     border-color: var(--accent);
-    background: #FFFFFF;
+    background: var(--bg-elev);
   }
 
   .form-field textarea {
@@ -1268,7 +1269,7 @@
   }
 
   .form-submit:hover:not(:disabled) {
-    background: #1559D6;
+    background: var(--accent-dim);
     transform: translateY(-1px);
   }
 
