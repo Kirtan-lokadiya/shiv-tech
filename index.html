@@ -675,54 +675,10 @@
   .leader-photo {
     width: 100%;
     aspect-ratio: 4 / 5;
-    display: flex;
-    align-items: flex-end;
-    padding: 22px;
-    position: relative;
-    overflow: hidden;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
     background: var(--surface);
-  }
-
-  .leader-photo::before,
-  .leader-photo::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
-  .leader-photo::before {
-    width: 240px;
-    height: 240px;
-    right: -60px;
-    top: -70px;
-    background: rgba(255, 255, 255, 0.35);
-  }
-
-  .leader-photo::after {
-    width: 150px;
-    height: 150px;
-    left: -35px;
-    bottom: -35px;
-    background: rgba(255, 255, 255, 0.22);
-  }
-
-  .leader-photo-kirtan {
-    background: linear-gradient(145deg, #2f6ddf 0%, #1d56bd 55%, #123d8d 100%);
-  }
-
-  .leader-photo-meet {
-    background: linear-gradient(145deg, #14889b 0%, #116f80 55%, #0d5461 100%);
-  }
-
-  .leader-initials {
-    position: relative;
-    z-index: 2;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(32px, 5vw, 54px);
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.95);
-    letter-spacing: 0.04em;
   }
 
   .leader-content {
@@ -1764,9 +1720,7 @@
 
     <div class="leadership-grid">
       <article class="leader-card">
-        <div class="leader-photo leader-photo-kirtan" role="img" aria-label="Kirtan Lokadiya, CEO at Shiv Tech">
-          <span class="leader-initials">KL</span>
-        </div>
+        <img class="leader-photo" src="assets/kirtan-lokadiya.jpg" alt="Kirtan Lokadiya, CEO at Shiv Tech" loading="lazy" />
         <div class="leader-content">
           <div class="leader-role">CEO</div>
           <h3 class="leader-name">Kirtan Lokadiya</h3>
@@ -1782,9 +1736,7 @@
       </article>
 
       <article class="leader-card">
-        <div class="leader-photo leader-photo-meet" role="img" aria-label="Meet Lunagariya, Founder at Shiv Tech">
-          <span class="leader-initials">ML</span>
-        </div>
+        <img class="leader-photo" src="assets/meet-lunagariya.jpg" alt="Meet Lunagariya, Founder at Shiv Tech" loading="lazy" />
         <div class="leader-content">
           <div class="leader-role">Founder</div>
           <h3 class="leader-name">Meet Lunagariya</h3>
